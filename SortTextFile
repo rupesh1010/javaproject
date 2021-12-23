@@ -1,0 +1,111 @@
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.*;
+import java.lang.*;
+
+class Employee
+{
+	String Empname;
+
+	int EmpSalary;
+
+	public Employee(String Empname, int EmpSalary)
+	{
+		this.Empname = Empname;
+
+		this.EmpSalary = EmpSalary;
+	}
+}
+
+//EmpnameCompare Class to compare the Empnames
+
+class EmpnameCompare implements Comparator<Employee>
+{
+	public int compare(Employee s1, Employee s2)
+	{
+		return s1.Empname.compareTo(s2.Empname);
+	}
+}
+
+//EmpSalaryCompare Class to compare the EmpSalary
+
+class EmpSalaryCompare implements Comparator<Employee>
+{
+	public int compare(Employee s1, Employee s2)
+	{
+		return s2.EmpSalary - s1.EmpSalary;
+	}
+}
+
+public class SortTextFile
+{
+	public static void main(String[] args) throws IOException
+	{
+		//Creating FileReader object
+		FileReader fr=new FileReader("C:\\Users\\Admin\\Desktop\\Input.txt");
+		//Creating BufferedReader object to read the input text file
+		BufferedReader reader = new BufferedReader(fr);
+
+		//Creating ArrayList to hold Student objects
+		ArrayList<Employee> EmployeeRecords = new ArrayList<Employee>();
+		//Reading Student records one by one
+		
+		String currentLine = reader.readLine();
+
+		while (currentLine != null)
+		{
+			String[] EmployeeDetail = currentLine.split(" ");
+
+			String Empname = EmployeeDetail[0];
+
+			int EmpSalary = Integer.valueOf(EmployeeDetail[1]);
+			//Creating Student object for every student record and adding it to ArrayList
+			EmployeeRecords.add(new Employee(Empname, EmpSalary));
+
+			currentLine = reader.readLine();
+		}
+
+		//Sorting ArrayList EmployeeRecords based on Empname
+
+		Collections.sort(EmployeeRecords, new EmpnameCompare());
+		//Creating and Writing every EmployeeRecords into output text file
+		
+		File fc=new File("C:\\Users\\Admin\\Desktop\\SortByEmpname.txt");
+		BufferedWriter writer = new BufferedWriter(new FileWriter(fc));
+		writer.write("Sorted by employees Name \n\n");		
+		for (Employee Employee : EmployeeRecords)
+		{
+			writer.write(Employee.Empname);
+
+			writer.write(" = "+Employee.EmpSalary+"rs");
+
+			writer.newLine();
+			reader.close();
+			
+		}
+		writer.close();
+		
+		//Sorting ArrayList EmployeeRecords based on EmpSalary
+		Collections.sort(EmployeeRecords, new EmpSalaryCompare());
+
+		//Creating and Writing every EmployeeRecords into output1 text file
+		
+		File fc1=new File("C:\\Users\\Admin\\Desktop\\SortBySalary.txt");
+		BufferedWriter writer1 = new BufferedWriter(new FileWriter(fc1));
+		writer1.write("Sorted by employees Salary \n\n");		
+		for (Employee Employee : EmployeeRecords)
+		{
+			writer1.write(Employee.Empname);
+
+			writer1.write(" = "+Employee.EmpSalary +"rs");
+
+			writer1.newLine();
+		}
+		
+		reader.close();
+		writer1.close();
+		System.out.println("code successfully executed....");
+		System.out.println("Now you can check.");
+	}
+}
