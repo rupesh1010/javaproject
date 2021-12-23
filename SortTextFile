@@ -1,3 +1,4 @@
+//First you need to create a text file name as Input.txt ("C: \\ Users \\ Admin \\ Desktop \\ Input.txt") and enter the names and salaries of the employees in the text file and then execute the program.
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
